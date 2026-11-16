@@ -1,3 +1,10 @@
+<!-- embryo-brand -->
+# Embryo PDF
+
+**Embryo PDF** is Embryo-Zero's fork of [BentoPDF](https://github.com/alam00000/bentopdf), made by Embryo Zero Backyard Data Center Corporation. Our changes are on the `embryo` branch; see [EMBRYO.md](EMBRYO.md), [LEGAL.md](LEGAL.md) and [CHANGES-EMBRYO.md](CHANGES-EMBRYO.md). The original project's README follows unchanged, with its authors' credits.
+
+---
+
 <p align="center"><img src="public/images/favicon-no-bg.svg" width="80"></p>
 <h1 align="center">BentoPDF</h1>
 <h3 align="center">💖 Thank You to Our Sponsors</h3>
