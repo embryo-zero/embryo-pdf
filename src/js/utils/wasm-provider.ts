@@ -16,6 +16,10 @@ const CDN_DEFAULTS: Record<WasmPackage, string> = {
 };
 
 function envOrDefault(envVar: string | undefined, fallback: string): string {
+  // Embryo PDF (2026-11-16): a relative path ("./wasm/...") is made absolute from where the page or worker runs
+  if (envVar && envVar.startsWith('./') && typeof self !== 'undefined' && self.location) {
+    return new URL(envVar, self.location.href).href;
+  }
   return envVar || fallback;
 }
 
