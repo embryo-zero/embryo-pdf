@@ -1,3 +1,4 @@
+round 7: files changed 146
 import Tesseract from 'tesseract.js';
 import {
   assertTesseractLanguagesAvailable,
@@ -40,13 +41,19 @@ function getDefaultTesseractAssetEnv(): TesseractAssetEnv {
 function normalizeDirectoryUrl(url?: string): string | undefined {
   const trimmed = url?.trim();
   if (!trimmed) return undefined;
-  return trimmed.replace(/\/+$/, '');
+  // Embryo PDF: "./ocr/..." is made absolute from the page, so the OCR worker gets full addresses
+  const abs = trimmed.startsWith('./') && typeof self !== 'undefined' && self.location
+    ? new URL(trimmed, self.location.href).href : trimmed;
+  return abs.replace(/\/+$/, '');
 }
 
 function normalizeFileUrl(url?: string): string | undefined {
   const trimmed = url?.trim();
   if (!trimmed) return undefined;
-  return trimmed.replace(/\/+$/, '');
+  // Embryo PDF: "./ocr/..." is made absolute from the page, so the OCR worker gets full addresses
+  const abs = trimmed.startsWith('./') && typeof self !== 'undefined' && self.location
+    ? new URL(trimmed, self.location.href).href : trimmed;
+  return abs.replace(/\/+$/, '');
 }
 
 export function resolveTesseractAssetConfig(

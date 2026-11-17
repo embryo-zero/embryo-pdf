@@ -16,3 +16,11 @@ License (read from its license file on 2026-11-16): **AGPL-3.0**. Original licen
 - Bundled third-party parts keep their own licenses: CHECK them before a release.
 - What people make with the tool belongs to them; the tool's license does not cover its output.
 - No warranty beyond what the license says.
+
+## Parts we serve from our own server (2026-11-16)
+- PDF engines: @bentopdf/pymupdf-wasm 0.11.16, @bentopdf/gs-wasm 0.1.1 (AGPL-3.0-only), coherentpdf 2.5.5 (AGPL-3.0-or-later).
+- OCR: tesseract.js and tesseract.js-core 7.0.0 (Apache-2.0); 102 language files from @tesseract.js-data/* (MIT packaging,
+  tessdata Apache-2.0).
+- Fonts: Noto fonts (SIL Open Font License 1.1) from @embedpdf/fonts-* 1.0.0 and googlefonts/noto-fonts @ffebf8c,
+  googlefonts/noto-cjk @f8d1575; each set keeps its LICENSE file; the fonts are not changed and not sold on their own.
+- The viewer no longer loads Open Sans from Google Fonts (our app font is used instead).

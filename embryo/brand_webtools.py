@@ -141,3 +141,27 @@ CSS4 = ("<style>" + M4 + "\n.geAppIcon{background-image:url(embryo-logo.png) !im
         "background-repeat:no-repeat !important;background-position:center !important}</style>")
 n += rw(f"{W}/diagrams/index.html", lambda s: s if M4 in s else s.replace("</head>", CSS4 + "</head>", 1))
 print("round 4: files changed", n)
+# round 5 (2026-11-16, owner OK "if it's legal to host it ourselves, then yes"): Embryo PDF's fallback fonts (Noto, OFL-1.1)
+# served from our server: /cluster/build/embedpdf-fonts -> pdf/embedpdf-fonts, each pack with its own LICENSE (OFL duty).
+if os.path.isdir("/cluster/build/embedpdf-fonts"):
+    shutil.copytree("/cluster/build/embedpdf-fonts", f"{W}/pdf/embedpdf-fonts", dirs_exist_ok=True)
+n = 0
+for p in glob.glob(f"{W}/pdf/assets/*.js"):
+    n += rw(p, lambda s: s.replace('`https://cdn.jsdelivr.net/npm/@embedpdf`', 'new URL("embedpdf-fonts",self.location.href).href'))
+print("round 5: font address changed in", n, "file(s)")
+# round 6 (2026-11-16): fonts Embryo PDF embeds into PDFs it makes (27 Noto fonts, OFL-1.1, pinned GitHub commits,
+# each repo's LICENSE kept) served from our server; the viewer's Google Fonts import removed (privacy; our app font is used).
+if os.path.isdir("/cluster/build/noto"):
+    shutil.copytree("/cluster/build/noto", f"{W}/pdf/noto", dirs_exist_ok=True)
+    if not os.path.exists(f"{W}/pdf/assets/noto"):
+        os.symlink("../noto", f"{W}/pdf/assets/noto")
+n = 0
+for p in glob.glob(f"{W}/pdf/assets/*.js"):
+    n += rw(p, lambda s: s.replace("https://rawcdn.githack.com/googlefonts/", "./noto/")
+            .replace("@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');", ""))
+print("round 6: files changed", n)
+# round 7: the spaced spelling "Bento PDF" (logo labels etc.)
+n = 0
+for p in glob.glob(f"{W}/pdf/**/*.html", recursive=True):
+    n += rw(p, lambda s: s.replace("Bento PDF", "Embryo PDF"))
+print("round 7: files changed", n)
