@@ -1,4 +1,3 @@
-round 7: files changed 146
 import Tesseract from 'tesseract.js';
 import {
   assertTesseractLanguagesAvailable,
